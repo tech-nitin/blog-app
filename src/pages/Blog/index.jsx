@@ -8,21 +8,33 @@ import { Link } from 'react-router-dom';
 
 const Blog = () => {
   const { id } = useParams();
+  const navigate = useNavigate();   // ✅ Move here
   const [blog, setBlog] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    let blog = blogList.find((blog) => blog.id === parseInt(id));
-    if (blog) {
-      setBlog(blog);
-    }
+    const storedBlogs =
+      JSON.parse(localStorage.getItem("blogs")) || blogList;
+
+    const foundBlog = storedBlogs.find(
+      (b) => b.id === Number(id)
+    );
+
+    setBlog(foundBlog || null);
   }, [id]);
 
+  // ✅ AFTER all hooks
+  if (!blog) {
+    return <h2 style={{ padding: "20px" }}>Blog not found</h2>;
+  }
+
   const handleDelete = () => {
-    const storedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+    const storedBlogs =
+      JSON.parse(localStorage.getItem("blogs")) || [];
+
     const updatedBlogs = storedBlogs.filter(
       (item) => item.id !== blog.id
     );
+
     localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
     navigate("/");
   };
@@ -32,30 +44,22 @@ const Blog = () => {
       <Link className='blog-goBack' to='/'>
         <span> &#8592;</span> <span>Go Back</span>
       </Link>
-      {blog ? (
-        <div className='blog-wrap'>
-          <header>
-            <p className='blog-date'>Published {blog.createdAt}</p>
-            <h1>{blog.title}</h1>
-            <div className='blog-subCategory'>
-              {blog.subCategory.map((category, i) => (
-                <div key={i}>
-                  <Chip label={category} />
-                </div>
-              ))}
-            </div>
-          </header>
-          <img src={blog.cover} alt='cover' />
-          <p className='blog-desc'>{blog.description}</p>
-        </div>
-      ) : (
-        <EmptyList />
-      )}
+
+      <div className='blog-wrap'>
+        <header>
+          <p className='blog-date'>Published {blog.createdAt}</p>
+          <h1>{blog.title}</h1>
+        </header>
+
+        <img src={blog.cover} alt='cover' />
+        <p className='blog-desc'>{blog.description}</p>
+      </div>
+
       <Link to={`/edit/${blog.id}`}>
         <button>Edit</button>
       </Link>
-      <button onClick={handleDelete}>Delete</button>
 
+      <button onClick={handleDelete}>Delete</button>
     </>
   );
 };
