@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import EmptyList from '../../components/common/Chip/EmptyList';
 import BlogList from '../../components/Home/BlogList';
 import Header from '../../components/Home/Header';
 import SearchBar from '../../components/Home/SearchBar';
 import { blogList } from '../../config/data';
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [blogs, setBlogs] = useState(blogList);
+  const [blogs, setBlogs] = useState([]);
+
+useEffect(() => {
+  const storedBlogs = JSON.parse(localStorage.getItem("blogs"));
+  if (storedBlogs) {
+    setBlogs(storedBlogs);
+  } else {
+    setBlogs(blogList);
+  }
+}, []);
   const [searchKey, setSearchKey] = useState('');
 
   // Search submit
@@ -45,6 +55,10 @@ const Home = () => {
 
       {/* Blog List & Empty View */}
       {!blogs.length ? <EmptyList /> : <BlogList blogs={blogs} />}
+
+      <Link to="/create">
+  <button>Create Blog</button>
+</Link>
     </div>
   );
 };

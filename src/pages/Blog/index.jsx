@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { blogList } from '../../config/data';
 import Chip from '../../components/common/Chip';
 import EmptyList from '../../components/common/Chip/EmptyList';
@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 const Blog = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let blog = blogList.find((blog) => blog.id === parseInt(id));
@@ -16,6 +17,15 @@ const Blog = () => {
       setBlog(blog);
     }
   }, [id]);
+
+  const handleDelete = () => {
+  const storedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const updatedBlogs = storedBlogs.filter(
+    (item) => item.id !== blog.id
+  );
+  localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
+  navigate("/");
+};
 
   return (
     <>
@@ -41,6 +51,7 @@ const Blog = () => {
       ) : (
         <EmptyList />
       )}
+      <button onClick={handleDelete}>Delete</button>
     </>
   );
 };
