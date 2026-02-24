@@ -14,9 +14,8 @@ const Blog = () => {
   useEffect(() => {
     const storedBlogs = JSON.parse(localStorage.getItem("blogs"));
 
-    const blogsToSearch = storedBlogs && storedBlogs.length
-      ? storedBlogs
-      : blogList;
+    const blogsToSearch =
+      storedBlogs && storedBlogs.length ? storedBlogs : blogList;
 
     const foundBlog = blogsToSearch.find(
       (b) => b.id === Number(id)
