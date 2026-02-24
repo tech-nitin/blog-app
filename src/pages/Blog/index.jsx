@@ -12,10 +12,13 @@ const Blog = () => {
   const [blog, setBlog] = useState(null);
 
   useEffect(() => {
-    const storedBlogs =
-      JSON.parse(localStorage.getItem("blogs")) || blogList;
+    const storedBlogs = JSON.parse(localStorage.getItem("blogs"));
 
-    const foundBlog = storedBlogs.find(
+    const blogsToSearch = storedBlogs && storedBlogs.length
+      ? storedBlogs
+      : blogList;
+
+    const foundBlog = blogsToSearch.find(
       (b) => b.id === Number(id)
     );
 
@@ -55,11 +58,13 @@ const Blog = () => {
         <p className='blog-desc'>{blog.description}</p>
       </div>
 
-      <Link to={`/edit/${blog.id}`}>
-        <button>Edit</button>
-      </Link>
+      {blog && (
+        <Link to={`/edit/${blog.id}`}>
+          <button>Edit</button>
+        </Link>
+      )}
 
-      <button onClick={handleDelete}>Delete</button>
+      {blog && <button onClick={handleDelete}>Delete</button>}
     </>
   );
 };
