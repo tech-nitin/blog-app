@@ -19,13 +19,13 @@ const Blog = () => {
   }, [id]);
 
   const handleDelete = () => {
-  const storedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
-  const updatedBlogs = storedBlogs.filter(
-    (item) => item.id !== blog.id
-  );
-  localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
-  navigate("/");
-};
+    const storedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
+    const updatedBlogs = storedBlogs.filter(
+      (item) => item.id !== blog.id
+    );
+    localStorage.setItem("blogs", JSON.stringify(updatedBlogs));
+    navigate("/");
+  };
 
   return (
     <>
@@ -51,7 +51,11 @@ const Blog = () => {
       ) : (
         <EmptyList />
       )}
+      <Link to={`/edit/${blog.id}`}>
+        <button>Edit</button>
+      </Link>
       <button onClick={handleDelete}>Delete</button>
+
     </>
   );
 };
