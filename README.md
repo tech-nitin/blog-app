@@ -1,6 +1,12 @@
 ## Live Demo
 https://your-vercel-link.vercel.app
 
+Features:
+- Full CRUD (Create, Read, Edit, Delete)
+- React Router dynamic routes
+- localStorage persistence
+- Deployed on Vercel
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
