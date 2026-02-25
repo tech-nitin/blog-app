@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { blogList } from '../../config/data';
-import Chip from '../../components/common/Chip';
-import EmptyList from '../../components/common/Chip/EmptyList';
 import './styles.css';
 import { Link } from 'react-router-dom';
 
