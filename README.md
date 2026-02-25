@@ -1,5 +1,5 @@
 ## Live Demo
-https://your-vercel-link.vercel.app
+https://blog-app-rust-beta.vercel.app/
 
 Features:
 - Full CRUD (Create, Read, Edit, Delete)
