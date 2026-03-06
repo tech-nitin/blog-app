@@ -10,7 +10,7 @@ const Blog = () => {
   const [blog, setBlog] = useState(null);
 
   useEffect(() => {
-    const storedBlogs = JSON.parse(localStorage.getItem("blogs"));
+    const storedBlogs = JSON.parse(localStorage.getItem("blogs")) || [];
 
     const blogsToSearch =
       storedBlogs && storedBlogs.length ? storedBlogs : blogList;
@@ -52,7 +52,7 @@ const Blog = () => {
         </header>
 
         <img src={blog.cover} alt='cover' />
-        <p className='blog-desc'>{blog.description}</p>
+        <p className='blog-desc'>{blog.content}</p>
       </div>
 
       {blog && (

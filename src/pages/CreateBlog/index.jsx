@@ -6,7 +6,7 @@ const CreateBlog = () => {
   const { id } = useParams();
 
   const [formData, setFormData] = useState({
-    title: "",
+    title: "" ,
     category: "",
     content: "",
     cover: "",
